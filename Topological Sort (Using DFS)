@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 100
+
+// Adjacency list node
+struct Node {
+    int vertex;
+    struct Node* next;
+};
+
+struct Node* adj[MAX];  // Array of adjacency lists
+int visited[MAX];
+int stack[MAX];
+int top = -1;
+
+// Function to add edge from sourse to destination
+void addEdge(int src, int dest) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->vertex = dest;
+    newNode->next = adj[src];
+    adj[src] = newNode;
+}
+
+// DFS function
+void dfs(int v) {
+    visited[v] = 1;
+
+    struct Node* temp = adj[v];
+    while (temp != NULL) {
+        if (!visited[temp->vertex]) {
+            dfs(temp->vertex);
+        }
+        temp = temp->next;
+    }
+
+    stack[++top] = v;  // Push to stack after visiting all descendants
+}
+
+int main() {
+    int vertices, edges;
+    int i, src, dest;
+
+    printf("Enter number of vertices: ");
+    scanf("%d", &vertices);
+
+    printf("Enter number of edges: ");
+    scanf("%d", &edges);
+
+    for (i = 0; i < vertices; i++) {
+        adj[i] = NULL;
+        visited[i] = 0;
+    }
+
+    printf("Enter edges (source destination):\n");
+    for (i = 0; i < edges; i++) {
+        scanf("%d %d", &src, &dest);
+        addEdge(src, dest);
+    }
+
+    // Call DFS function for unvisited vertices
+    for (i = 0; i < vertices; i++) {
+        if (!visited[i]) {
+            dfs(i);
+        }
+    }
+
+    // Print topological sort (in reverse of finishing time)
+    printf("Topological Sort (DFS-based):\n");
+    while (top >= 0) {
+        printf("%d ", stack[top--]);
+    }
+    printf("\n");
+
+    return 0;
+}
