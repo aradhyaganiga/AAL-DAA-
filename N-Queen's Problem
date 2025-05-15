@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define N 8  // We can change N to any number to solve for different board sizes
+
+int board[N];
+
+void printSolution() {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (board[i] == j)
+                printf(" Q ");
+            else
+                printf(" . ");
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+// Check if it's safe to place a queen at row 'row' and column 'col'
+bool isSafe(int row, int col) {
+    for (int i = 0; i < row; i++) {
+        // Check column and diagonals
+        if (board[i] == col || (board[i] - i) == (col - row) || (board[i] + i) == (col + row))
+            return false;
+    }
+    return true;
+}
+
+// Solving N-Queens using backtracking
+void solveNQueens(int row) {
+    if (row == N) {
+        printSolution();  // Finding the valid arrangement
+        return;
+    }
+
+    for (int col = 0; col < N; col++) {
+        if (isSafe(row, col)) {
+            board[row] = col;
+            solveNQueens(row + 1);  
+        }
+    }
+}
+
+int main() {
+    printf("Solutions to the %d-Queens problem:\n\n", N);
+    solveNQueens(0);
+    return 0;
+}
