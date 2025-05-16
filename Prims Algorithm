@@ -57,3 +57,22 @@ int main() {
 
     return 0;
 }
+
+Output:-
+Enter the number of vertices: 4
+Enter the adjacency matrix (use 0 for no connection):
+0 10 0 30
+10 0 50 0
+0 50 0 20
+30 0 20 0
+Enter the number of vertices: 4
+Enter the adjacency matrix (use 0 for no connection):
+0 10 0 30
+10 0 50 0
+0 50 0 20
+30 0 20 0
+Edges in the Minimum Spanning Tree:
+Edge 1: (0 - 1) cost = 10
+Edge 2: (0 - 3) cost = 30
+Edge 3: (3 - 2) cost = 20
+Total cost of Minimum Spanning Tree = 60
